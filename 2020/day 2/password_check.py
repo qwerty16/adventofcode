@@ -9,6 +9,17 @@ correct_passwords = []
 
 def password_meets_rule(rule, password):
     [a, character] = rule.split()
+    locations = a.split("-")
+    total_found = 0
+    for location in locations:
+        if password[int(location)] == character:
+            total_found += 1
+    
+    if total_found == 1:
+        return True
+
+def password_meets_rule_part_1(rule, password):
+    [a, character] = rule.split()
     [min, max] = a.split("-")
     min = int(min)
     max = int(max)
