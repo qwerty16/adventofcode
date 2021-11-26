@@ -1,6 +1,11 @@
+import os
+
+path = os.getcwd()
+input_file_path = os.path.join(path, "input.txt")
+
 values = []
 
-with open(r"C:\Users\rarms\Documents\Programming\Python\adventofcode\adventofcode\2020\day 1\input.txt", 'r') as f:
+with open(input_file_path, 'r') as f:
     for line in f.readlines():
         values += [int(line)]
 
