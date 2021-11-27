@@ -56,9 +56,13 @@ def iyr_valid(value):
     else:
         return False
 
-
 def eyr_valid(value):
-    return True
+    #(Expiration Year) - four digits; at least 2020 and at most 2030
+    value = int(value)
+    if value <= 2030 and value >= 2020:
+        return True
+    else:
+        return False
 
 def hgt_valid(value):
     return True
