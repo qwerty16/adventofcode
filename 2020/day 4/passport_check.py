@@ -1,7 +1,7 @@
 import os
 
 path = os.getcwd()
-input_file_path = os.path.join(path, "test_input.txt")
+input_file_path = os.path.join(path, "input.txt")
 
 def extract_passports_from_file(input_file_path):
     list_of_passports = []
@@ -57,7 +57,7 @@ required_fields = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
 optional_fields = ("cid")
 
 for passport in passports:
-    print(passport)
+    #print(passport)
     if passport_valid(passport, required_fields, optional_fields) == True:
         valid_passports += 1
 
