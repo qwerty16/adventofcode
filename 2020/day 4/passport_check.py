@@ -65,7 +65,25 @@ def eyr_valid(value):
         return False
 
 def hgt_valid(value):
-    return True
+    #(Height) - a number followed by either cm or in:
+    #If cm, the number must be at least 150 and at most 193.
+    #If in, the number must be at least 59 and at most 76.
+    print(value)
+    try:
+        number = int(value[:-2])
+    except ValueError:
+        return False
+
+    units = value[-2:]
+    
+    if units == "cm":
+        if number < 150 or number > 193:
+            return False
+    elif units == "in":
+        if number < 59 or number > 76:
+           return False
+    else:
+        return False
 
 def hcl_valid(value):
     #(Hair Color) - a # followed by exactly six characters 0-9 or a-f
