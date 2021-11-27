@@ -41,7 +41,13 @@ def load_passports(input_file_path):
     return passports
 
 def passport_valid(passport, required, optional):
-    pass
+    for field in required:
+        try:
+            passport[field]
+        except KeyError:
+            return False
+    
+    return True
 
 valid_passports = 0
 
