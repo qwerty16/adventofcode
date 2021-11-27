@@ -78,6 +78,11 @@ def ecl_valid(value):
         return False
 
 def pid_valid(value):
+    #(Passport ID) - a nine-digit number, including leading zeroes
+    if len(value) != 9:
+        return False
+
+    int(value)
     return True
 
 def passport_valid(passport):
