@@ -71,7 +71,11 @@ def hcl_valid(value):
     return True
 
 def ecl_valid(value):
-    return True
+    #(Eye Color) - exactly one of: amb blu brn gry grn hzl oth
+    if value in ("amb", "blu", "brn", "gry", "grn", "hzl", "oth"):
+        return True
+    else:
+        return False
 
 def pid_valid(value):
     return True
