@@ -40,25 +40,63 @@ def load_passports(input_file_path):
     
     return passports
 
-def passport_valid(passport, required, optional):
-    for field in required:
+def byr_valid(value):
+    # Birth Year must be 4 digits between 1920 and 2002
+    value = int(value)
+    if value <= 2002 and value >= 1920:
+        return True
+    else:
+        return False
+
+def iyr_valid(value):
+    return True
+
+def eyr_valid(value):
+    return True
+
+def hgt_valid(value):
+    return True
+
+def hcl_valid(value):
+    return True
+
+def ecl_valid(value):
+    return True
+
+def pid_valid(value):
+    return True
+
+def passport_valid(passport):
+    required_fields = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
+    optional_fields = ("cid")
+
+    is_valid = {
+        "byr": byr_valid,
+        "iyr": iyr_valid,
+        "eyr": eyr_valid,
+        "hgt": hgt_valid,
+        "hcl": hcl_valid,
+        "ecl": ecl_valid,
+        "pid": pid_valid
+    }
+
+    for field in required_fields:
         try:
-            passport[field]
+            value = passport[field]
         except KeyError:
             return False
     
+        if is_valid[field](value) == False:
+            return False
+
     return True
 
 valid_passports = 0
 
 passports = load_passports(input_file_path)
 
-required_fields = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
-optional_fields = ("cid")
-
 for passport in passports:
-    #print(passport)
-    if passport_valid(passport, required_fields, optional_fields) == True:
+    if passport_valid(passport) == True:
         valid_passports += 1
 
 print(f"Valid passports: {valid_passports}")
