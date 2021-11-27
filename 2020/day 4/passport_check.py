@@ -68,6 +68,20 @@ def hgt_valid(value):
     return True
 
 def hcl_valid(value):
+    #(Hair Color) - a # followed by exactly six characters 0-9 or a-f
+    allowed_values = (
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "a", "b", "c", "d", "e", "f"
+    )
+    if len(value) != 7:
+        return False
+
+    if value[0] != "#":
+        return False
+
+    for character in value[1:]:
+        if character not in allowed_values:
+            return False
     return True
 
 def ecl_valid(value):
