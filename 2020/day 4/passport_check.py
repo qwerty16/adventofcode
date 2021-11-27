@@ -49,7 +49,13 @@ def byr_valid(value):
         return False
 
 def iyr_valid(value):
-    return True
+    #(Issue Year) - four digits; at least 2010 and at most 2020.
+    value = int(value)
+    if value <= 2020 and value >= 2010:
+        return True
+    else:
+        return False
+
 
 def eyr_valid(value):
     return True
