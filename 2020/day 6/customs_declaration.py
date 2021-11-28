@@ -9,10 +9,12 @@ with open(input_file_path, 'r') as input_file:
     group_answers = {}
     for line in input_file.readlines():
         line = line.strip()
+
         if line == '':
             total += len(group_answers)
+            print(f"Line: {line}\tSize: {group_size}\tAnswers: {group_answers}\tTotal: {total}")
             group_size = 0
-            group_answers = {}           
+            group_answers = {}
         else:
             group_size += 1
             answer = line
@@ -21,6 +23,8 @@ with open(input_file_path, 'r') as input_file:
                     group_answers[character] += 1
                 else:
                     group_answers[character] = 1
+            print(f"Line: {line}\tSize: {group_size}\tAnswers: {group_answers}\tTotal: {total}")
+
 
 
 print(total)
