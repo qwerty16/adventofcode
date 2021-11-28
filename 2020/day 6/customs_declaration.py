@@ -11,7 +11,10 @@ with open(input_file_path, 'r') as input_file:
         line = line.strip()
 
         if line == '':
-            total += len(group_answers)
+            for answer in group_answers.keys():
+                if group_answers[answer] == group_size:
+                    total += 1
+            #total += len(group_answers)
             print(f"Line: {line}\tSize: {group_size}\tAnswers: {group_answers}\tTotal: {total}")
             group_size = 0
             group_answers = {}
