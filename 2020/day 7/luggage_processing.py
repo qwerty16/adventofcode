@@ -88,49 +88,33 @@ def bags_that_can_contain_shiny_gold(input_file_path):
     return output
 
 def bags_contained(initial, baggage_rules):
-    new_bags = []
-
-    for bag in initial:
-        print(f"Checking for bags within {bag} bag")
-        bag_name = bag[0]
-
-        if bag_name == "empty":
-            print("Skipping empty bag")
-        elif bag_name in baggage_rules.keys():
-            print(bag_name)
-            new_bags += baggage_rules[bag_name]
-            new_bags = [bag for bag in new_bags if bag != ("empty", 0)]
-            print(f"Found: {new_bags}")
-            for new_bag in new_bags:
-                new_bags += bags_contained([new_bag], baggage_rules)
-    return new_bags
+    # https://www.reddit.com/r/adventofcode/comments/kaf8v6/comment/gfa6yuf/
+    if initial not in baggage_rules.keys():
+        return 0
+    else:
+        sum = 0
+        for bag_name, bag_count in baggage_rules[initial]:
+            sum += bag_count
+            sum += bag_count * bags_contained(bag_name, baggage_rules)
+    
+    return sum 
 
 def bags_that_shiny_gold_contains(input_file_path):
     baggage_rules = file_to_rules(input_file_path, container_bags)
-    print(baggage_rules)
-    total = 0
-    bags = []
-    initial = (('shiny gold',1),)
-    bags = bags_contained(initial, baggage_rules)
-    print(f"Found bags {bags}")
-    
-    for bag in bags:
-        total += bag[1]
-    
-    return total
-
+    bags = bags_contained('shiny gold', baggage_rules)
+    return bags
 
 ### Part 1
 test_output = bags_that_can_contain_shiny_gold(test_input_file_path)
 #actual_output = bags_that_can_contain_shiny_gold(input_file_path)
-print(f"Test: {test_output}\tShould be: 4")
+print(f"Test: {test_output}\t\tShould be: 4")
 #print(f"Actual: {actual_output}")
 
 ### Part 2
 test_output = bags_that_shiny_gold_contains(test_input_file_path)
 test_output_2 = bags_that_shiny_gold_contains(test_input_file_path_2)
-#actual_output = bags_that_shiny_gold_contains(input_file_path)
+actual_output = bags_that_shiny_gold_contains(input_file_path)
 
 print(f"Test: {test_output}\tShould be: 32")
 print(f"Test: {test_output_2}\tShould be: 126")
-#print(f"Actual: {actual_output}")
+print(f"Actual: {actual_output}")
