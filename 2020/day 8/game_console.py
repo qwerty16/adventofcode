@@ -12,8 +12,30 @@ def file_to_list(input_file_path):
     
     return output
 
-print(file_to_list(test_input_file_path))
+def process_instruction(current_line, instruction):
+    next_line = 0
+    accumulator_change = 0
+    return next_line, accumulator_change
 
+def run_console_code(input_file_path):
+    accumulator = 0
+    instructions = file_to_list(input_file_path)
+    current_line = 0
+    current_instruction = instructions[current_line][0]
+    while instructions[current_line][1] == 0:
+        instructions[current_line][1] += 1
+        next_line, accumulator_change = process_instruction(current_line, current_instruction)
+        accumulator += accumulator_change
+        current_line = next_line
+    
+    return accumulator
+
+
+### Part 1
+test_output = run_console_code(test_input_file_path)
+#actual_output = run_console_code(input_file_path)
+print(f"Test: {test_output}\t\tShould be: 5")
+#print(f"Actual: {actual_output}")
 
 # >>> e = [['a', 0], ['b', 0], ['c', 0]]
 # >>> e[0]
