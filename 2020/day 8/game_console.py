@@ -29,32 +29,27 @@ def process_instruction(line, instruction):
 
     return next_line, accumulator_change
 
-def run_console_code(input_file_path):
+def run_console_code(code):
     accumulator = 0
-    instructions = file_to_list(input_file_path)
+    instructions = code
     current_line = 0
     current_instruction = instructions[current_line][0]
     times_visited_current_line = instructions[current_line][1]
-    #print(f"Visited: {times_visited_current_line}")
     while times_visited_current_line == 0:
         instructions[current_line][1] += 1
         next_line, accumulator_change = process_instruction(current_line, current_instruction)
-        #print(f"Visited: {times_visited_current_line}")
         accumulator += accumulator_change
         current_line = next_line
-        #print(f"Visited: {times_visited_current_line}")
         times_visited_current_line = instructions[current_line][1]
-        #print(f"Visited: {times_visited_current_line}")
         current_instruction = instructions[current_line][0]
-    
     return accumulator
 
 
-### Part 1
-test_output = run_console_code(test_input_file_path)
-actual_output = run_console_code(input_file_path)
+print("### Part 1")
+test_output = run_console_code(file_to_list(test_input_file_path))
+#actual_output = run_console_code(input_file_path)
 print(f"Test: {test_output}\t\tShould be: 5")
-print(f"Actual: {actual_output}")
+#print(f"Actual: {actual_output}")
 
 # >>> e = [['a', 0], ['b', 0], ['c', 0]]
 # >>> e[0]
