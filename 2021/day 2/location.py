@@ -1,15 +1,15 @@
-from os import linesep
 from pathlib import Path
-from typing import ParamSpecArgs
 
 test_input_file_path = Path(__file__).absolute().parent / "test_input.txt"
 input_file_path = Path(__file__).absolute().parent / "input.txt"
+
 
 def process_line(line):
     line = line.strip()
     direction, magnitude = line.split()
     magnitude = int(magnitude)
     return direction, magnitude
+
 
 def aim(direction, magnitude, current):
     horizontal, depth, aim = current
@@ -34,8 +34,9 @@ def cardinal(direction, magnitude, current):
         depth += magnitude
     elif direction == 'up':
         depth -= magnitude
-    
+
     return (horizontal, depth, aim)
+
 
 def calculate_distance_traveled(input_file_path, movement):
     horizontal = 0
@@ -49,6 +50,7 @@ def calculate_distance_traveled(input_file_path, movement):
             horizontal, depth, aim = movement(direction, magnitude, current)
 
     return horizontal * depth
+
 
 print("### Part 1")
 test_output = calculate_distance_traveled(test_input_file_path, cardinal)
