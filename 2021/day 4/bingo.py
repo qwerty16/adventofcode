@@ -32,23 +32,25 @@ def remove_from_board(number, board):
 
 def slowest_winner(input_file_path):
     numbers_to_call, bingo_boards = bingo_setup(input_file_path)
-    winner = []
 
     live_boards = list(range(len(bingo_boards)))
 
     while True:
+        winners = []
+        winning_numbers = []
         called_number = numbers_to_call.pop()
         for board_number in live_boards:
             bingo_boards[board_number] = remove_from_board(called_number, bingo_boards[board_number])
             if winning_board(bingo_boards[board_number]) is True:
-                winner = bingo_boards[board_number]
-                winning_number = board_number
-        if winner != []:
-            if len(live_boards) > 0:
-                live_boards.remove(winning_number)
+                winners += [bingo_boards[board_number]]
+                winning_numbers += [board_number]
+        if winners != []:
+            for winning_number in winning_numbers:
+                if len(live_boards) > 0:
+                    live_boards.remove(winning_number)
             if len(live_boards) == 0:
-                return calculate_score(winner, called_number)
-            winner = []
+                return calculate_score(winners[0], called_number)
+
 
 
 def fastest_winner(input_file_path):
@@ -103,4 +105,4 @@ print("### Part 2")
 test_output = slowest_winner(test_input_file_path)
 print(f"Test: {test_output}\t\tShould be: 1924")
 actual_output = slowest_winner(input_file_path)
-# print(f"Actual: {actual_output}")
+print(f"Actual: {actual_output}")
