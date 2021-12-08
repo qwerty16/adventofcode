@@ -1,0 +1,21 @@
+from pathlib import Path
+
+test_input_file_path = Path(__file__).absolute().parent / "test_input.txt"
+input_file_path = Path(__file__).absolute().parent / "input.txt"
+
+
+def count1478(input_file_path):
+    return 0
+
+
+print("### Part 1")
+test_output = count1478(test_input_file_path)
+print(f"Test: {test_output}\t\tShould be: 26")
+# actual_output = count1478(input_file_path)
+# print(f"Actual: {actual_output}")
+
+print("### Part 2")
+# test_output = main(test_input_file_path)
+# print(f"Test: {test_output}\t\tShould be: XXX")
+# actual_output = main(input_file_path)
+# print(f"Actual: {actual_output}")
