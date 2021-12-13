@@ -68,6 +68,16 @@ def part_2(input_file_path: str):
     points, instructions = read_file(input_file_path)
     for instruction in instructions:
         points = fold(points, instruction)
+    matrix = []
+    for i in range(6):
+        matrix += [40 * ["."]]
+
+    for point in points:
+        matrix[point.y][point.x] = "#"
+
+    for line in matrix:
+        print("".join(line))
+    return 0
 
 
 print("### Part 1")
@@ -77,7 +87,7 @@ actual_output = part_1(input_file_path)
 print(f"Actual: {actual_output}")
 
 print("### Part 2")
-test_output = part_2(test_input_file_path)
-print(f"Test should be a square\n{test_output}")
-# actual_output = part_2(input_file_path)
-# print(f"Actual output should be 8 capital letters\n{actual_output}")
+print(f"Test should be a square")
+part_2(test_input_file_path)
+print(f"Actual output should be 8 capital letters")
+part_2(input_file_path)
