@@ -10,12 +10,12 @@ def main(input_file_path):
 
 print("### Part 1")
 test_output = main(test_input_file_path)
-# actual_output = main(input_file_path)
 print(f"Test: {test_output}\t\tShould be: XXX")
+# actual_output = main(input_file_path)
 # print(f"Actual: {actual_output}")
 
 print("### Part 2")
 # test_output = main(test_input_file_path)
-# actual_output = main(input_file_path)
 # print(f"Test: {test_output}\t\tShould be: XXX")
+# actual_output = main(input_file_path)
 # print(f"Actual: {actual_output}")
