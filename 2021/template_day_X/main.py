@@ -4,8 +4,17 @@ test_input_file_path = Path(__file__).absolute().parent / "test_input.txt"
 input_file_path = Path(__file__).absolute().parent / "input.txt"
 
 
+def read_file(input_file_path):
+    output = []
+    with open(input_file_path) as input_file:
+        for line in input_file.readlines():
+            output += line.strip()
+    return output
+
+
 def main(input_file_path):
-    return 0
+    data = read_file(input_file_path)
+    return data
 
 
 print("### Part 1")
