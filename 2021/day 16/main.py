@@ -1,6 +1,7 @@
 from pathlib import Path
 
 test_input_file_path = Path(__file__).absolute().parent / "test_input.txt"
+test_input_2_file_path = Path(__file__).absolute().parent / "test_input_2.txt"
 input_file_path = Path(__file__).absolute().parent / "input.txt"
 
 byte_lookup = {
@@ -77,7 +78,7 @@ def read_int(data, position, length):
     return int(output, 2), position + length
 
 
-def read_packet(line, position):
+def packet_version(line, position):
     # print(f"p:{position} ", end="")
     v, position = read_version(line, position)
     total_version = [int(v)]
@@ -96,36 +97,96 @@ def read_packet(line, position):
             # print(f"len:{l} ", end="")
             final = position + l
             while position < final:
-                new_version, sub_position = read_packet(line[position:final], 0)
+                new_version, sub_position = packet_version(line[position:final], 0)
                 total_version += new_version
                 position += sub_position
         elif i == "1":
             n, position = read_int(line, position, 11)
             # print(f"n:{n} ", end="")
             for i in range(n):
-                new_version, position = read_packet(line, position)
+                new_version, position = packet_version(line, position)
                 total_version += new_version
 
     return total_version, position
 
 
-def main(input_file_path):
+def part_1(input_file_path):
     data = read_file(input_file_path)
     for line in data:
         position = 0
-        version, position = read_packet(line, position)
-        # print(f"\nTotal version: {sum(version)}")
+        version, position = packet_version(line, position)
     return sum(version)
 
 
+def packet_output(line, position):
+    v, position = read_version(line, position)
+    t, position = read_type(line, position)
+    if t == "4":
+        literal, position = read_literal(line, position)
+        return literal, position
+    else:
+        i = line[position]
+        position += 1
+        operating_values = []
+        if i == "0":
+            l, position = read_int(line, position, 15)
+            final = position + l
+            while position < final:
+                new_literal, sub_position = packet_output(line[position:final], 0)
+                operating_values += [new_literal]
+                position += sub_position
+        elif i == "1":
+            n, position = read_int(line, position, 11)
+            for i in range(n):
+                new_literal, position = packet_output(line, position)
+                operating_values += [new_literal]
+
+    if t == "0":
+        return sum(operating_values), position
+    elif t == "1":
+        output = 1
+        for value in operating_values:
+            output = output * value
+        return output, position
+    elif t == "2":
+        return min(operating_values), position
+    elif t == "3":
+        return max(operating_values), position
+    elif t == "5":
+        if operating_values[0] > operating_values[1]:
+            return 1, position
+        else:
+            return 0, position
+    elif t == "6":
+        if operating_values[0] < operating_values[1]:
+            return 1, position
+        else:
+            return 0, position
+    elif t == "7":
+        if operating_values[0] == operating_values[1]:
+            return 1, position
+        else:
+            return 0, position
+
+
+def part_2(input_file_path):
+    data = read_file(input_file_path)
+    outputs = []
+    for line in data:
+        position = 0
+        literal, position = packet_output(line, position)
+        outputs += [literal]
+    return outputs
+
+
 print("### Part 1")
-test_output = main(test_input_file_path)
+test_output = part_1(test_input_file_path)
 print(f"Test: {test_output}\t\tShould be: 31")
-actual_output = main(input_file_path)
-print(f"Actual: {actual_output}")
+actual_output = part_1(input_file_path)
+print(f"Actual: {actual_output}\t\tShould be: 847")
 
 print("### Part 2")
-# test_output = main(test_input_file_path)
-# print(f"Test: {test_output}\t\tShould be: XXX")
-# actual_output = main(input_file_path)
-# print(f"Actual: {actual_output}")
+test_output = part_2(test_input_2_file_path)
+print(f"Test: {test_output}\t\tShould be: [3,54,7,9,1,0,0,1]")
+actual_output = part_2(input_file_path)
+print(f"Actual: {actual_output}")
