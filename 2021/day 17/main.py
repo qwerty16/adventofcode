@@ -17,30 +17,25 @@ def step(x, y, v_x, v_y):
 
 
 def fire_probe(v_x, v_y, target):
-    # print(f"Initial v_x: {v_x}\tv_y: {v_y}\t", end="")
     hit = False
     max_y = 0
     x = 0
     y = 0
     missed = False
     while missed == False and hit == False:
-        # print(f"x:{x}y:{y}v_x:{v_x}v_y:{v_y}")
         x, y, v_x, v_y = step(x, y, v_x, v_y)
         max_y = max(max_y, y)
         if x in target[0] and y in target[1]:
             hit = True
-            # print(f"hit max_y: {max_y}")
         if x > max(target[0]) or y < min(target[1]):
             missed = True
-            # print("Missed")
-
     return hit, max_y
 
 
 def max_height(target):
     max_height = 0
-    for x in range(max(target[0])):
-        for y in range(150):
+    for x in range(max(target[0]) + 1):
+        for y in range(min(target[1]), -1 * min(target[1])):
             hit, max_y = fire_probe(x, y, target)
             if hit is True:
                 max_height = max(max_height, max_y)
@@ -50,18 +45,18 @@ def max_height(target):
 def count_hits(target):
     hits = 0
     for x in range(max(target[0]) + 1):
-        for y in range(2 * min(target[1]), -2 * min(target[1])):
-            hit, max_y = fire_probe(x, y, target)
+        for y in range(min(target[1]), -1 * min(target[1])):
+            hit, _ = fire_probe(x, y, target)
             if hit is True:
                 hits += 1
     return hits
 
 
-# print("### Part 1")
-# test_output = max_height(test_target)
-# print(f"Test: {test_output}\t\tShould be: 45")
-# actual_output = max_height(actual_target)
-# print(f"Actual: {actual_output}")
+print("### Part 1")
+test_output = max_height(test_target)
+print(f"Test: {test_output}\t\tShould be: 45")
+actual_output = max_height(actual_target)
+print(f"Actual: {actual_output}")
 
 print("### Part 2")
 test_output = count_hits(test_target)
