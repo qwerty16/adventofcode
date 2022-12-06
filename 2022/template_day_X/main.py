@@ -12,19 +12,19 @@ def read_file(input_file_path):
     return output
 
 
-def main(input_file_path):
+def main(input_file_path, part):
     data = read_file(input_file_path)
     return data
 
 
 print("### Part 1")
-test_output = main(test_input_file_path)
+test_output = main(test_input_file_path, 1)
 print(f"Test: {test_output}\t\tShould be: XXX")
-# actual_output = main(input_file_path)
+# actual_output = main(input_file_path,1)
 # print(f"Actual: {actual_output}")
 
 print("### Part 2")
-# test_output = main(test_input_file_path)
+# test_output = main(test_input_file_path,2)
 # print(f"Test: {test_output}\t\tShould be: XXX")
-# actual_output = main(input_file_path)
+# actual_output = main(input_file_path,2)
 # print(f"Actual: {actual_output}")
