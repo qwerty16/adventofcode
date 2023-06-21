@@ -16,22 +16,19 @@ def read_file(input_file_path):
 
 
 def turn_on(lights, light):
-    lights[light] = 1
+    lights[light] += 1
     return lights
 
 
 def toggle(lights, light):
-    if lights[light] == 1:
-        lights[light] = 0
-    elif lights[light] == 0:
-        lights[light] = 1
-    else:
-        print(f"something strange going on {lights[light]}")
+    lights[light] += 2
     return lights
 
 
 def turn_off(lights, light):
-    lights[light] = 0
+    if lights[light] == 0:
+        return lights
+    lights[light] -= 1
     return lights
 
 
@@ -70,18 +67,15 @@ def main(input_file_path):
             for y in range(start.y, end.y + 1):
                 location = (x * 1000) + y
                 lights = func(lights, location)
-        # print(sum(lights))
     return sum(lights)
 
 
 print("### Part 1")
-test_output = main(test_input_file_path)
-print(f"Test: {test_output}\t\tShould be: 998996")
-actual_output = main(input_file_path)
-print(f"Actual: {actual_output}")
-
-print("### Part 2")
 # test_output = main(test_input_file_path)
-# print(f"Test: {test_output}\t\tShould be: XXX")
+# print(f"Test: {test_output}\t\tShould be: 998996")
 # actual_output = main(input_file_path)
 # print(f"Actual: {actual_output}")
+
+print("### Part 2")
+actual_output = main(input_file_path)
+print(f"Actual: {actual_output}")
