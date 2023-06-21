@@ -1,3 +1,4 @@
 */*/input.txt
 *.pyc
 */*/test_input.txt
+.vscode/*
