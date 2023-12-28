@@ -32,8 +32,10 @@ class Processor:
         while self.continue_processing:
             self.process()
 
-    def get_parameters(self, raw_instruction, n_parameters):
+    def get_parameters(self, n_parameters):
         parameters = []
+
+        raw_instruction = self.program[self.instruction_pointer]
 
         mode_1 = (raw_instruction // 100) % 10
         mode_2 = (raw_instruction // 1000) % 10
@@ -63,33 +65,33 @@ class Processor:
 
         ic(instruction)
 
-        self.instruction_map[instruction](raw_instruction)
+        self.instruction_map[instruction]()
 
-    def add(self, raw_instruction):
-        parameters = self.get_parameters(raw_instruction, 2)
+    def add(self):
+        parameters = self.get_parameters(2)
         result = parameters[0] + parameters[1]
         self.program[self.program[self.instruction_pointer + 3]] = result
         self.instruction_pointer += 4
         ic(result)
         ic(self.program)
 
-    def multiply(self, raw_instruction):
-        parameters = self.get_parameters(raw_instruction, 2)
+    def multiply(self):
+        parameters = self.get_parameters(2)
         result = parameters[0] * parameters[1]
         self.program[self.program[self.instruction_pointer + 3]] = result
         self.instruction_pointer += 4
         ic(result)
         ic(self.program)
 
-    def input(self, raw_instruction):
+    def input(self):
         result = self.get_input()
         self.program[self.program[self.instruction_pointer + 1]] = result
         self.instruction_pointer += 2
         ic(result)
         ic(self.program)
 
-    def output(self, raw_instruction):
-        parameters = self.get_parameters(raw_instruction, 1)
+    def output(self):
+        parameters = self.get_parameters(1)
         ic(parameters)
         output = str(parameters[0])
         self.instruction_pointer += 2
@@ -97,8 +99,8 @@ class Processor:
         ic(output)
         ic(self.program)
 
-    def jump_if_true(self, raw_instruction):
-        parameters = self.get_parameters(raw_instruction, 2)
+    def jump_if_true(self):
+        parameters = self.get_parameters(2)
         ic(parameters)
         ic(f"jump if true {parameters[0]} != 0 : ")
         if parameters[0] != 0:
@@ -110,8 +112,8 @@ class Processor:
 
         ic(self.instruction_pointer)
 
-    def jump_if_false(self, raw_instruction):
-        parameters = self.get_parameters(raw_instruction, 2)
+    def jump_if_false(self):
+        parameters = self.get_parameters(2)
         ic(parameters)
         ic(f"jump if false {parameters[0]} == 0 : ")
         if parameters[0] == 0:
@@ -122,8 +124,8 @@ class Processor:
             self.instruction_pointer += 3
         ic(self.instruction_pointer)
 
-    def is_equal(self, raw_instruction):
-        parameters = self.get_parameters(raw_instruction, 3)
+    def is_equal(self):
+        parameters = self.get_parameters(3)
         ic(parameters)
         ic(f"equal {parameters[0]} == {parameters[1]} : ")
         if parameters[0] == parameters[1]:
@@ -138,5 +140,5 @@ class Processor:
         ic(self.program)
         ic(self.instruction_pointer)
 
-    def halt(self, raw_instruction):
+    def halt(self):
         self.continue_processing = False
