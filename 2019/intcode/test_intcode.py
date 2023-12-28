@@ -79,7 +79,7 @@ class TestDay5:
     def test_equal_false_pos_mode(self):
         program = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]
         p = Processor(program=program)
-        p.input = [7]
+        p.input = [1]
         p.run()
         assert p.output == "0"
 

@@ -125,15 +125,17 @@ class Processor:
         ic(self.instruction_pointer)
 
     def is_equal(self):
-        parameters = self.get_parameters(3)
+        parameters = self.get_parameters(2)
         ic(parameters)
+        output_location = self.program[self.instruction_pointer + 3]
+        ic(output_location)
         ic(f"equal {parameters[0]} == {parameters[1]} : ")
         if parameters[0] == parameters[1]:
             ic("True")
-            self.program[parameters[2]] = 1
+            self.program[output_location] = 1
         else:
             ic("False")
-            self.program[parameters[2]] = 0
+            self.program[output_location] = 0
 
         self.instruction_pointer += 4
 
