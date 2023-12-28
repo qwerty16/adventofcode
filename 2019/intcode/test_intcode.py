@@ -96,3 +96,31 @@ class TestDay5:
         p.input = [7]
         p.run()
         assert p.output == "0"
+
+    def test_less_than_true_pos_mode(self):
+        program = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]
+        p = Processor(program=program)
+        p.input = [7]
+        p.run()
+        assert p.output == "1"
+
+    def test_less_than_false_pos_mode(self):
+        program = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]
+        p = Processor(program=program)
+        p.input = [8]
+        p.run()
+        assert p.output == "0"
+
+    def test_less_than_true_imm_mode(self):
+        program = [3, 3, 1107, -1, 8, 3, 4, 3, 99]
+        p = Processor(program=program)
+        p.input = [7]
+        p.run()
+        assert p.output == "1"
+
+    def test_less_than_false_imm_mode(self):
+        program = [3, 3, 1107, -1, 8, 3, 4, 3, 99]
+        p = Processor(program=program)
+        p.input = [8]
+        p.run()
+        assert p.output == "0"

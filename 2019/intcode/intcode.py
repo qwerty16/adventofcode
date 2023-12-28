@@ -22,6 +22,7 @@ class Processor:
             4: self.output,
             5: self.jump_if_true,
             6: self.jump_if_false,
+            7: self.is_less_than,
             8: self.is_equal,
             99: self.halt,
         }
@@ -122,6 +123,24 @@ class Processor:
         else:
             ic("False")
             self.instruction_pointer += 3
+        ic(self.instruction_pointer)
+
+    def is_less_than(self):
+        parameters = self.get_parameters(2)
+        ic(parameters)
+        output_location = self.program[self.instruction_pointer + 3]
+        ic(output_location)
+        ic(f"less than {parameters[0]} < {parameters[1]} : ")
+        if parameters[0] < parameters[1]:
+            ic("True")
+            self.program[output_location] = 1
+        else:
+            ic("False")
+            self.program[output_location] = 0
+
+        self.instruction_pointer += 4
+
+        ic(self.program)
         ic(self.instruction_pointer)
 
     def is_equal(self):
