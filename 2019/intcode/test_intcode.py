@@ -124,3 +124,14 @@ class TestDay5:
         p.input = [8]
         p.run()
         assert p.output == "0"
+
+
+class TestDay7:
+    def test_amplifier_sequence(self):
+        program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
+        amplifier_sequence = AmplifierSequence(program=program)
+        amplifier_sequence.initial_input = [[4, 3, 2, 1, 0]]
+
+        amplifier_sequence.run()
+
+        assert amplifier_sequence.max_output = 43210
