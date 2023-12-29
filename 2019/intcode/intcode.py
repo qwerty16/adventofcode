@@ -30,6 +30,7 @@ class Processor:
         self.input = []
 
     def run(self):
+        self.continue_processing = True
         while self.continue_processing:
             self.process()
 
@@ -162,4 +163,13 @@ class Processor:
         ic(self.instruction_pointer)
 
     def halt(self):
+        self.continue_processing = False
+
+
+class Amplifier(Processor):
+    """An Amplifier is a Processor that waits after each
+    time it outputs something to see what its next input will be"""
+
+    def output(self):
+        super().output()
         self.continue_processing = False
