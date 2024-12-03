@@ -12,7 +12,7 @@ def read_file(input_file_path):
 
 class Processor:
     def __init__(self, program: list = []) -> None:
-        self.program = program
+        self.program = program.copy()
         self.instruction_pointer = 0
         self.continue_processing = True
         self.instruction_map = {
@@ -28,6 +28,12 @@ class Processor:
         }
         self.output = ""
         self.input = []
+
+    def __str__(self):
+        return f"Processor: {self.program}"
+
+    def __repr__(self):
+        return str(self)
 
     def run(self):
         self.continue_processing = True
@@ -66,7 +72,6 @@ class Processor:
         instruction = raw_instruction % 100
 
         ic(instruction)
-
         self.instruction_map[instruction]()
 
     def add(self):
@@ -170,6 +175,68 @@ class Amplifier(Processor):
     """An Amplifier is a Processor that waits after each
     time it outputs something to see what its next input will be"""
 
+    def __str__(self):
+        return f"Amplifier: {self.program}"
+
     def output(self):
         super().output()
         self.continue_processing = False
+
+
+class AmplifierSequence:
+    def __init__(self, programs, initial_inputs) -> None:
+        self.programs = programs
+        self.initial_inputs = initial_inputs
+        self.max_output = 0
+        self.max_output_input = []
+
+        self.amplifiers = []
+        self.finished = []
+
+    def run(self):
+        for inputs in self.initial_inputs:
+            self.amplifiers = []
+            self.finished = []
+            for program, inp in zip(self.programs, inputs):
+                a = Amplifier(program=program[0])
+                a.input = [inp]
+                self.amplifiers += [a]
+                self.finished += [False]
+
+            target = [True for i in inputs]
+
+            steps = 0
+            while self.finished != target:
+                if steps > 50:
+                    break
+                current_program = steps % len(inputs)
+                next_program = (steps + 1) % len(inputs)
+                if steps == 0:
+                    self.amplifiers[current_program].input = [0] + self.amplifiers[
+                        current_program
+                    ].input
+                else:
+                    self.amplifiers[current_program].input = [output] + self.amplifiers[
+                        current_program
+                    ].input
+
+                ic.disable()
+                self.amplifiers[current_program].run()
+                ic.enable()
+                output = self.amplifiers[current_program].output
+                if output == "":
+                    output = 0
+                    self.finished[current_program] = True
+                else:
+                    output = int(output)
+                self.amplifiers[current_program].output = ""
+                self.amplifiers[next_program].input += [output]
+                if output > self.max_output:
+                    self.max_output = output
+                    self.max_output_input = inputs
+
+                steps += 1
+            ic(inputs)
+            ic(self.max_output)
+
+        ic(self.max_output_input)

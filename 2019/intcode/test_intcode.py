@@ -1,4 +1,5 @@
-from .intcode import Processor
+from .intcode import Processor, AmplifierSequence
+from itertools import permutations
 
 
 class TestDay2:
@@ -128,10 +129,26 @@ class TestDay5:
 
 class TestDay7:
     def test_amplifier_sequence(self):
+        inputs = [4, 3, 2, 1, 0]
         program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
-        amplifier_sequence = AmplifierSequence(program=program)
-        amplifier_sequence.initial_input = [[4, 3, 2, 1, 0]]
+        initial_inputs = [inputs]
+        programs = [[program] for i in inputs]
+        amplifier_sequence = AmplifierSequence(
+            programs=programs, initial_inputs=initial_inputs
+        )
 
         amplifier_sequence.run()
 
-        assert amplifier_sequence.max_output = 43210
+        assert amplifier_sequence.max_output_input == [4, 3, 2, 1, 0]
+
+    def test_amplifier_sequence_combos(self):
+        input_a = [4, 3, 2, 1, 0]
+        initial_inputs = list(permutations(input_a))
+        program = [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0]
+        programs = [[program] for i in input_a]
+        amplifier_sequence = AmplifierSequence(
+            programs=programs, initial_inputs=initial_inputs
+        )
+
+        amplifier_sequence.run()
+        assert amplifier_sequence.max_output_input == [4, 3, 2, 1, 0]
